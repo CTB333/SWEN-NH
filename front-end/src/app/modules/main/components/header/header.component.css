@@ -1,0 +1,58 @@
+header {
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+}
+
+.header-container {
+    flex-basis: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-container h1 {
+    font-size: 2rem;
+    letter-spacing: 5px;
+}
+
+.header-container.btn-container {
+    justify-content: flex-end
+}
+
+.header-container.charts {
+    padding: 1em;
+    justify-content: flex-start;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.25rem;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.btn-small {
+    flex-basis: 25%;
+    margin: 0 1em;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-small.colored {
+    background: rgb(255,211,20);
+    background: linear-gradient(0deg, rgba(255,211,20,1) 0%, rgba(255,20,145,1) 100%);
+}

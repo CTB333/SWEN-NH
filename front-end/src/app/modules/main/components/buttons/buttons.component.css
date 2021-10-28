@@ -1,0 +1,33 @@
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    margin: 1em 0;
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    transition-property: transform, background;
+    color: white
+}
+
+.btn-large {
+    flex-basis: 100%;
+    padding: 15px;
+    letter-spacing: 5px;
+}
+
+.btn-med {
+    flex-basis: 75%;
+    padding: 10px;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    background: var(--light-green);
+}

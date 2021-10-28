@@ -1,0 +1,34 @@
+<div class="component-wrapper fl-center">
+  <div class="card">
+    <div class="card-header fl-center">
+      <h2 class="card-title">Login</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="loginForm" class="fl-center fl-column">
+        <div class="form-group fl-center">
+          <input
+            name="email"
+            type="text"
+            class="form-input"
+            required
+            formControlName="email"
+          />
+          <label for="email" class="form-label">Email</label>
+        </div>
+        <div class="form-group fl-center">
+          <input
+            name="password"
+            type="text"
+            class="form-input"
+            required
+            formControlName="password"
+          />
+          <label for="password" class="form-label">Password</label>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer fl-right">
+      <button (click)="onSubmit()" class="form-btn">Login</button>
+    </div>
+  </div>
+</div>
