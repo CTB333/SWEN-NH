@@ -8,6 +8,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongo = require('mongoose')
+const cookieParser = require('cookie-parser');
 const app = express();
 const corsOptions = {
     origin:'*', 
@@ -18,6 +19,7 @@ const corsOptions = {
 const userRoutes = require('./routes/userRoutes')
 
 app.use(cors(corsOptions));
+app.use(cookieParser())
 app.use(express.json({
     limit: '1mb'
 }));

@@ -20,10 +20,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      // console.log(this.loginForm.value);
       this.userService.login(this.loginForm.value).subscribe(
         (res) => {
-          console.log(res);
+          this.userService.setToken(res.message);
           this.router.navigate(['menu']);
         },
         (err) => {

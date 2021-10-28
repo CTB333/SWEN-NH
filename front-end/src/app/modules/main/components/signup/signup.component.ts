@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit {
     rePassword: new FormControl(''),
   });
 
-  constructor(private userService: UsersService, router: Router) {}
+  constructor(private userService: UsersService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -31,8 +31,9 @@ export class SignupComponent implements OnInit {
     }
     if (this.registerForm.valid) {
       this.userService.register(this.registerForm).subscribe(
-        (response) => {
-          console.log(response);
+        (res) => {
+          this.userService.setToken(res.message);
+          this.router.navigate(['menu']);
           return;
         },
         (error) => {
