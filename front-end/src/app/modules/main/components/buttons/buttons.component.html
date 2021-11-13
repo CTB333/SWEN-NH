@@ -1,7 +1,7 @@
 <div class="component-wrapper fl-center">
   <div class="button-container">
     <div class="btn-large btn bg-dark-grey"><h2>Play Game</h2></div>
-    <div class="btn-med btn bg-dark-grey">
+    <div *ngIf="isLoggedIn" class="btn-med btn bg-dark-grey">
       <a class="btn-link" routerLink="/settings"><h4>Settings</h4></a>
     </div>
     <div class="btn-med btn bg-dark-grey"><h4>Contact Us</h4></div>

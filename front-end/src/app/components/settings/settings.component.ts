@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -7,28 +9,33 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  isLoggedIn: Boolean = false;
+  errorMessage: Boolean = false;
+  successMessage: Boolean = false;
+
+  isLoggedIn: Boolean;
+
   stats: Boolean = false;
   identity: Boolean = false;
   notifications: Boolean = false;
 
-  constructor(private usersService: UsersService) {
-    // this.usersService.loggedIn().subscribe((result) => {
-    //   console.log('result', result);
-    //    = result;
-    // });
+  membership: Number = 0;
+  donationForm = new FormGroup({
+    donation: new FormControl('0.00'),
+  });
+
+  constructor(private usersService: UsersService, private router: Router) {}
+
+  async ngOnInit() {
+    this.isLoggedIn = await this.usersService.loggedIn();
     if (this.isLoggedIn) {
-      console.log(this.isLoggedIn);
       this.usersService.getUser().subscribe((res) => {
         this.stats = res.user.stats;
         this.identity = res.user.identity;
         this.notifications = res.user.notifications;
       });
+    } else {
+      this.router.navigate(['menu']);
     }
-  }
-
-  async ngOnInit() {
-    this.isLoggedIn = await this.usersService.loggedIn();
   }
 
   changeStatus(value: number) {
@@ -45,6 +52,19 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  changeMembership(value: Number) {
+    this.membership = value;
+  }
+
+  deleteAccount() {
+    // this.usersService.
+  }
+
+  donate() {
+    let value = this.donationForm.value.donation;
+    console.log(value);
+  }
+
   saveChanges() {
     let data = {
       stats: this.stats,
@@ -53,10 +73,13 @@ export class SettingsComponent implements OnInit {
     };
     this.usersService.updateUser(data).subscribe(
       (res) => {
-        console.log(res);
+        if (res.success) {
+          return (this.successMessage = true);
+        }
+        return (this.errorMessage = true);
       },
       (err) => {
-        console.log(err);
+        return (this.errorMessage = true);
       }
     );
   }

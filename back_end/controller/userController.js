@@ -43,7 +43,7 @@ const register_post = async (req, res) => {
         name: body.name.toLowerCase(),
         email: body.email.toLowerCase(),
         password: hash,
-        statistics: false,
+        statistics: true,
         identity: false,
         notifications: false
     })
@@ -60,8 +60,13 @@ const register_post = async (req, res) => {
 
 const update_user = async (req, res) => {
     body = JSON.parse(Object.keys(req.body)[0]);
+    stats = body.stats
+    notif = body.notif
+    iden = body.identity
+    cookie = body.jwt
     try {
-        id = jwt.verify(body.jwt, key).id
+        token = jwt.verify(cookie, key)
+        id = token.id
     } catch (err) {
         return res.send({
             success: false,
@@ -69,7 +74,14 @@ const update_user = async (req, res) => {
         })
     }
     user = await User.findById(id)
-    console.log(body)
+    console.log(user)
+    user.statistics = stats
+    user.identity = iden
+    user.notifications = notif
+    await user.save()
+    res.send({
+        success: true
+    })
 }
 
 const get_user = async (req, res) => {
@@ -100,7 +112,7 @@ const loggedIn = (req, res) => {
     body = JSON.parse(Object.keys(req.body)[0]);
     try {
         token = jwt.verify(body.jwt, key)
-        console.log(jwt)
+        console.log(token)
         return res.send(true)
     } catch (err) {
         console.log('jwt error', err)

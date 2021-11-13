@@ -16,13 +16,56 @@
       </div>
     </div>
     <div class="btn-container fl-center">
-      <div class="btn delete">Delete Account</div>
+      <div class="btn delete" (click)="deleteAccount()">Delete Account</div>
       <div class="btn save" (click)="saveChanges()">Save Changes</div>
     </div>
   </div>
-  <div class="col-med fl-center">
-    <div class="container">
-      <h1 class="cont-title">Membership</h1>
+  <div class="col-med fl-left fl-column">
+    <h1 class="cont-title">Membership</h1>
+
+    <div class="container fl-center fl-column">
+      <div class="inner-div container-text">
+        <h2>Choose what you pay</h2>
+      </div>
+      <div
+        [formGroup]="donationForm"
+        class="inner-div fl-center container-input"
+      >
+        <input
+          formControlName="donation"
+          type="number"
+          class="donation-input"
+        />
+        <span class="input-sign">$</span>
+      </div>
+      <div class="inner-div container-text">
+        <h2>Teirs</h2>
+      </div>
+      <div
+        (click)="changeMembership(0)"
+        class="inner-div option-container fl-left"
+      >
+        <div class="option-btn" [ngClass]="{ active: membership == 0 }"></div>
+        <h4 class="option-text">Basic</h4>
+      </div>
+      <div
+        (click)="changeMembership(1)"
+        class="inner-div option-container fl-left"
+      >
+        <div class="option-btn" [ngClass]="{ active: membership == 1 }"></div>
+        <h4 class="option-text">Gold</h4>
+      </div>
+      <div
+        (click)="changeMembership(2)"
+        class="inner-div option-container fl-left"
+      >
+        <div class="option-btn" [ngClass]="{ active: membership == 2 }"></div>
+        <h4 class="option-text">Platinum</h4>
+      </div>
+    </div>
+
+    <div class="btn-container fl-center fl-column">
+      <div (click)="donate()" class="btn btn-full">Donate</div>
     </div>
   </div>
   <div class="col-small"></div>

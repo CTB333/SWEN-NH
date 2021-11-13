@@ -7,13 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  constructor(private router: Router) {
-    console.log('menue constructer');
-  }
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    console.log('menue ngInit');
-  }
+  ngOnInit(): void {}
 
   hasRoute(route: string): boolean {
     return this.router.url === route;

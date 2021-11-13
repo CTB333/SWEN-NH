@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         (err) => {
-          console.log('Err Occured');
+          console.log('Err Occured in login');
           console.log(err);
         }
       );
