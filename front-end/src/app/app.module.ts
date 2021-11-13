@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './modules/main/components/header/header.component';
@@ -14,6 +14,10 @@ import { ButtonsComponent } from './modules/main/components/buttons/buttons.comp
 import { LoginComponent } from './modules/main/components/login/login.component';
 import { SignupComponent } from './modules/main/components/signup/signup.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+
+import { CookieService } from 'ngx-cookie-service';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     LoginComponent,
     SignupComponent,
     NotFoundComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +39,14 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

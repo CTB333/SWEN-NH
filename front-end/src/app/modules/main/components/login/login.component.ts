@@ -22,10 +22,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.userService.login(this.loginForm.value).subscribe(
         (res) => {
-          this.userService.setToken(res.message);
-          this.router.navigate(['menu']);
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['/']);
         },
         (err) => {
+          console.log('Err Occured');
           console.log(err);
         }
       );

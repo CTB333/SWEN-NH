@@ -1,0 +1,29 @@
+<div class="full-page fl-center">
+  <div class="col-med fl-left fl-column">
+    <h1 class="cont-title">Account Settings</h1>
+    <div class="container fl-center fl-column">
+      <div (click)="changeStatus(0)" class="option-container fl-left">
+        <div class="option-btn" [ngClass]="{ active: stats }"></div>
+        <h3 class="option-text">Share my statistics</h3>
+      </div>
+      <div (click)="changeStatus(1)" class="option-container fl-left">
+        <div class="option-btn" [ngClass]="{ active: identity }"></div>
+        <h3 class="option-text">Share identifiable information</h3>
+      </div>
+      <div (click)="changeStatus(2)" class="option-container fl-left">
+        <div class="option-btn" [ngClass]="{ active: notifications }"></div>
+        <h3 class="option-text">Notifications</h3>
+      </div>
+    </div>
+    <div class="btn-container fl-center">
+      <div class="btn delete">Delete Account</div>
+      <div class="btn save" (click)="saveChanges()">Save Changes</div>
+    </div>
+  </div>
+  <div class="col-med fl-center">
+    <div class="container">
+      <h1 class="cont-title">Membership</h1>
+    </div>
+  </div>
+  <div class="col-small"></div>
+</div>

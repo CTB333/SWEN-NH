@@ -1,5 +1,25 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const maxAge = 2 * 24 * 60 * 60;
+const key = process.env.JWT_KEY;
+
+function createToken(id) {
+    return jwt.sign({
+        id
+    }, key, {
+        expiresIn: maxAge
+    });
+}
+
+function verifyToken(req, res, next) {
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized request')
+    }
+    let token = req.headers.authorization.split(' ')[1] 
+}
 
 const login_post = async (req, res) => {
     body = JSON.parse(Object.keys(req.body)[0]);
@@ -7,7 +27,9 @@ const login_post = async (req, res) => {
     password = body.password
     try {
         const user = await User.login(email.toLowerCase(), password.toLowerCase())
-        return res.json({success: true, message: user._id, type: 'login'})
+        console.log(user)
+        token = createToken(user._id)
+        return res.json({success: true, token: token, type: 'login'})
     } catch (err) {
         console.log('err:', err)
         return res.json({success: false, message: err.message, type: 'err'})
@@ -20,19 +42,74 @@ const register_post = async (req, res) => {
     const user = new User({
         name: body.name.toLowerCase(),
         email: body.email.toLowerCase(),
-        password: hash
+        password: hash,
+        statistics: false,
+        identity: false,
+        notifications: false
     })
     user.save().then((response) => {
         console.log('user saved')
         console.log(response)
-        return res.json({success: true, message: response._id, type: 'register'})
+        token = createToken(response._id)
+        return res.json({success: true, token: token, type: 'register'})
     }).catch((err) => {
         return res.json({success: false, message: err.message, type: 'err'})
     })
     
 }
 
+const update_user = async (req, res) => {
+    body = JSON.parse(Object.keys(req.body)[0]);
+    try {
+        id = jwt.verify(body.jwt, key).id
+    } catch (err) {
+        return res.send({
+            success: false,
+            message: 'Token is invalid'
+        })
+    }
+    user = await User.findById(id)
+    console.log(body)
+}
+
+const get_user = async (req, res) => {
+    body = JSON.parse(Object.keys(req.body)[0]);
+    try {
+        id = jwt.verify(body.jwt, key).id
+    } catch (err) {
+        return res.send({
+            success: false,
+            message: 'Token is invalid'
+        })
+    }
+    user = await User.findById(id)
+    data = {
+        name: user.name,
+        email: user.email,
+        stats: user.statistics,
+        identity: user.identity,
+        notifications: user.notifications
+    }
+    return res.send({
+        success: true,
+        user: data
+    })
+}
+
+const loggedIn = (req, res) => {
+    body = JSON.parse(Object.keys(req.body)[0]);
+    try {
+        id = jwt.verify(body.jwt, key).id
+        return res.send(true)
+    } catch (err) {
+        return res.send(false)
+    }
+}
+
 module.exports = {
     login_post,
-    register_post
+    register_post,
+    update_user,
+    get_user,
+    loggedIn
 }

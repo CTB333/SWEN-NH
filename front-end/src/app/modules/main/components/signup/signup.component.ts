@@ -32,8 +32,9 @@ export class SignupComponent implements OnInit {
     if (this.registerForm.valid) {
       this.userService.register(this.registerForm).subscribe(
         (res) => {
-          this.userService.setToken(res.message);
-          this.router.navigate(['menu']);
+          console.log(res);
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['/']);
           return;
         },
         (error) => {

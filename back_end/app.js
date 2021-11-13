@@ -8,10 +8,15 @@
 const express = require('express');
 const cors = require('cors');
 const mongo = require('mongoose')
-const cookieParser = require('cookie-parser');
 const app = express();
+
+const whitelist = ['http://localhost:4200'];
 const corsOptions = {
-    origin:'*', 
+    origin: (origin, callback) => {
+        if(whitelist.includes(origin))
+            return callback(null, true)
+        callback(new Error('Not allowed by CORS'));
+    }, 
     credentials:true,  
     optionSuccessStatus:200,
 }
@@ -19,7 +24,6 @@ const corsOptions = {
 const userRoutes = require('./routes/userRoutes')
 
 app.use(cors(corsOptions));
-app.use(cookieParser())
 app.use(express.json({
     limit: '1mb'
 }));

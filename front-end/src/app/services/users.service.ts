@@ -3,10 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { User } from '../User';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-type': 'application/x-www-form-urlencoded',
+    // 'Content-Type': 'application/json',
   }),
   withCredentials: true,
 };
@@ -16,24 +19,13 @@ const httpOptions = {
 })
 export class UsersService {
   private apiUrl: string = 'http://localhost:3000';
-  constructor(private http: HttpClient) {}
 
-  setToken(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  isLoggedIn(): boolean {
-    return this.getToken() !== null;
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(form: FormGroup): Observable<any> {
     let url = this.apiUrl + '/users/login';
     let json = JSON.stringify(form);
-    return this.http.post<User[]>(url, json, httpOptions);
+    return this.http.post<any>(url, json, httpOptions);
   }
 
   register(form: FormGroup): Observable<any> {
@@ -44,6 +36,45 @@ export class UsersService {
       password: form.value.password,
     };
     console.log(json);
-    return this.http.post<User>(url, json, httpOptions);
+    return this.http.post<any>(url, json, httpOptions);
+  }
+
+  loggedIn(): Observable<Boolean> {
+    let url = this.apiUrl + '/users/loggedIn';
+    let token = this.getToken();
+    let data = {
+      jwt: token,
+    };
+    return this.http.post<any>(url, data, httpOptions);
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/']);
+  }
+
+  getUser(): Observable<any> {
+    let token = this.getToken();
+    let data = {
+      jwt: token,
+    };
+    let url = this.apiUrl + '/users/get';
+    return this.http.post<any>(url, data, httpOptions);
+  }
+
+  updateUser(data: any): Observable<any> {
+    let url = this.apiUrl + '/users/update';
+    let token = this.getToken();
+    let post_data = {
+      stats: data.stats,
+      notif: data.notif,
+      identity: data.identity,
+      jwt: token,
+    };
+    return this.http.post<any>(url, post_data, httpOptions);
   }
 }
