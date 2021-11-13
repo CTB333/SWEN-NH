@@ -8,16 +8,14 @@ import { UsersService } from './services/users.service';
 export class LoginGuard implements CanActivate {
   loggedIn: Boolean;
   constructor(private usersService: UsersService, private router: Router) {}
-
-  canActivate() {
-    console.log('login guard');
-    this.loggedIn = this.usersService.status;
-    console.log(this.loggedIn);
-    if (!this.loggedIn) {
-      return true;
-    } else {
-      this.router.navigate(['/menu']);
+  status: boolean;
+  async canActivate() {
+    this.status = await this.usersService.loggedIn();
+    if (this.status) {
+      this.router.navigate(['menu']);
       return false;
+    } else {
+      return true;
     }
   }
 }

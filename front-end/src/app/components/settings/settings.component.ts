@@ -13,10 +13,10 @@ export class SettingsComponent implements OnInit {
   notifications: Boolean = false;
 
   constructor(private usersService: UsersService) {
-    this.usersService.loggedIn().subscribe((result) => {
-      console.log('result', result);
-      this.isLoggedIn = result;
-    });
+    // this.usersService.loggedIn().subscribe((result) => {
+    //   console.log('result', result);
+    //    = result;
+    // });
     if (this.isLoggedIn) {
       console.log(this.isLoggedIn);
       this.usersService.getUser().subscribe((res) => {
@@ -27,7 +27,9 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  async ngOnInit() {
+    this.isLoggedIn = await this.usersService.loggedIn();
+  }
 
   changeStatus(value: number) {
     switch (value) {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { User } from '../User';
-import { CookieService } from 'ngx-cookie-service';
+
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 const httpOptions = {
@@ -39,13 +39,13 @@ export class UsersService {
     return this.http.post<any>(url, json, httpOptions);
   }
 
-  loggedIn(): Observable<Boolean> {
+  loggedIn(): Promise<boolean> {
     let url = this.apiUrl + '/users/loggedIn';
     let token = this.getToken();
     let data = {
       jwt: token,
     };
-    return this.http.post<any>(url, data, httpOptions);
+    return this.http.post<any>(url, data, httpOptions).toPromise();
   }
 
   getToken() {

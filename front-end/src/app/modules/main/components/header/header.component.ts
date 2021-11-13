@@ -12,18 +12,14 @@ export class HeaderComponent implements OnInit {
   chart = faChartBar;
   isLoggedIn: Boolean;
 
-  constructor(private usersService: UsersService) {
-    console.log('constructor run');
-  }
+  constructor(private usersService: UsersService) {}
 
   onClick() {
     this.usersService.logOut();
   }
 
-  ngOnInit(): void {
-    this.usersService.loggedIn().subscribe((result) => {
-      this.isLoggedIn = result;
-    });
-    console.log('ngInit run');
+  async ngOnInit() {
+    this.isLoggedIn = await this.usersService.loggedIn();
+    console.log('Header:', this.isLoggedIn);
   }
 }

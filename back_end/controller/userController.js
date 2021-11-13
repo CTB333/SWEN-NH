@@ -99,9 +99,11 @@ const get_user = async (req, res) => {
 const loggedIn = (req, res) => {
     body = JSON.parse(Object.keys(req.body)[0]);
     try {
-        id = jwt.verify(body.jwt, key).id
+        token = jwt.verify(body.jwt, key)
+        console.log(jwt)
         return res.send(true)
     } catch (err) {
+        console.log('jwt error', err)
         return res.send(false)
     }
 }
