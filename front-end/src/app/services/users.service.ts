@@ -77,4 +77,10 @@ export class UsersService {
     };
     return this.http.post<any>(url, post_data, httpOptions);
   }
+
+  deleteUser(): Observable<any> {
+    let token = this.getToken();
+    let url = this.apiUrl + '/users/delete';
+    return this.http.post<any>(url, { token }, httpOptions);
+  }
 }

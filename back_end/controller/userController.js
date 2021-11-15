@@ -88,24 +88,24 @@ const get_user = async (req, res) => {
     body = JSON.parse(Object.keys(req.body)[0]);
     try {
         id = jwt.verify(body.jwt, key).id
+        user = await User.findById(id)
+        data = {
+            name: user.name,
+            email: user.email,
+            stats: user.statistics,
+            identity: user.identity,
+            notifications: user.notifications
+        }
+        return res.send({
+            success: true,
+            user: data
+        })
     } catch (err) {
         return res.send({
             success: false,
             message: 'Token is invalid'
         })
     }
-    user = await User.findById(id)
-    data = {
-        name: user.name,
-        email: user.email,
-        stats: user.statistics,
-        identity: user.identity,
-        notifications: user.notifications
-    }
-    return res.send({
-        success: true,
-        user: data
-    })
 }
 
 const loggedIn = (req, res) => {
@@ -120,10 +120,28 @@ const loggedIn = (req, res) => {
     }
 }
 
+const delete_user = async (req, res) => {
+    body = JSON.parse(Object.keys(req.body)[0]);
+    try {
+        token = jwt.verify(body.token, key)
+        id = token.id
+        user = await User.findByIdAndDelete(id)
+        res.send({
+            success: true
+        })
+    } catch (err) {
+        return res.send({
+            success: false,
+            message: 'User cannot be found'
+        })
+    }
+}
+
 module.exports = {
     login_post,
     register_post,
     update_user,
     get_user,
-    loggedIn
+    loggedIn,
+    delete_user
 }

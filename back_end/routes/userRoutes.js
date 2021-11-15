@@ -12,4 +12,6 @@ router.post('/loggedIn', contr.loggedIn)
 
 router.post('/get', contr.get_user)
 
+router.post('/delete', contr.delete_user)
+
 module.exports = router;

@@ -71,12 +71,37 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteAccount() {
-    // this.usersService.
+    this.usersService.deleteUser().subscribe(
+      (res) => {
+        if (res.success) {
+          this.isSuccess('User Deleted');
+          this.usersService.logOut();
+          return;
+        }
+        this.isError();
+        return;
+      },
+      (err) => {
+        this.isError();
+      }
+    );
   }
 
   donate() {
     let value = this.donationForm.value.donation;
     this.errorMessage = true;
+  }
+
+  isError() {
+    this.success = false;
+    this.successMessage = '';
+    this.errorMessage = true;
+  }
+
+  isSuccess(message: string) {
+    this.errorMessage = false;
+    this.successMessage = message;
+    this.success = true;
   }
 
   saveChanges() {
@@ -88,18 +113,16 @@ export class SettingsComponent implements OnInit {
     this.usersService.updateUser(data).subscribe(
       (res) => {
         if (res.success) {
-          this.errorMessage = false;
-          this.successMessage = 'Settings saved successfully';
-          return (this.success = true);
+          this.isSuccess('Settings saved successfully');
+          this.usersService.logOut();
+          return;
         }
-        this.success = false;
-        this.successMessage = '';
-        return (this.errorMessage = true);
+        this.isError();
+        return;
       },
       (err) => {
-        this.success = false;
-        this.successMessage = '';
-        return (this.errorMessage = true);
+        this.isError();
+        return;
       }
     );
   }
