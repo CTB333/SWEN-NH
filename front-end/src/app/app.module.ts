@@ -18,6 +18,8 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 
 import { CookieService } from 'ngx-cookie-service';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { SuccessMessageComponent } from './components/success-message/success-message.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     SignupComponent,
     NotFoundComponent,
     SettingsComponent,
+    ErrorMessageComponent,
+    SuccessMessageComponent,
   ],
   imports: [
     BrowserModule,

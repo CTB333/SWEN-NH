@@ -178,3 +178,26 @@ a {
 .form-btn:hover {
     background: var(--light-blue);
 }
+
+.anchor {
+    position: relative;
+}
+
+.message-card {
+    position: absolute;
+    width: 100%;
+    top: 0;  
+    left: 0;
+    z-index: 10;
+    padding: 15px;
+}
+
+.message-container {
+    cursor: pointer;
+    max-width: 250px;
+    padding: 30px;
+    border: 2px solid white;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+}

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { UsersService } from 'src/app/services/users.service';
+import { faBackward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +13,10 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class SettingsComponent implements OnInit {
   errorMessage: Boolean = false;
-  successMessage: Boolean = false;
+  success: Boolean = false;
+  successMessage: String;
+
+  backBtn = faBackward;
 
   isLoggedIn: Boolean;
 
@@ -38,6 +44,14 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  changeSuccess(value: boolean) {
+    this.success = value;
+  }
+
+  changeError(value: boolean) {
+    this.errorMessage = value;
+  }
+
   changeStatus(value: number) {
     switch (value) {
       case 0:
@@ -62,7 +76,7 @@ export class SettingsComponent implements OnInit {
 
   donate() {
     let value = this.donationForm.value.donation;
-    console.log(value);
+    this.errorMessage = true;
   }
 
   saveChanges() {
@@ -74,11 +88,17 @@ export class SettingsComponent implements OnInit {
     this.usersService.updateUser(data).subscribe(
       (res) => {
         if (res.success) {
-          return (this.successMessage = true);
+          this.errorMessage = false;
+          this.successMessage = 'Settings saved successfully';
+          return (this.success = true);
         }
+        this.success = false;
+        this.successMessage = '';
         return (this.errorMessage = true);
       },
       (err) => {
+        this.success = false;
+        this.successMessage = '';
         return (this.errorMessage = true);
       }
     );

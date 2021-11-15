@@ -1,4 +1,13 @@
-<div class="full-page fl-center">
+<div class="full-page fl-center anchor">
+  <app-error-message
+    [show]="errorMessage"
+    (changeShow)="changeError($event)"
+  ></app-error-message>
+  <app-success-message
+    [show]="success"
+    [message]="successMessage"
+    (changeShow)="changeSuccess($event)"
+  ></app-success-message>
   <div class="col-med fl-left fl-column">
     <h1 class="cont-title">Account Settings</h1>
     <div class="container fl-center fl-column">
@@ -69,4 +78,9 @@
     </div>
   </div>
   <div class="col-small"></div>
+  <div class="back-btn">
+    <a class="fl-center" routerLink="/menu"
+      ><fa-icon [icon]="backBtn"></fa-icon
+    ></a>
+  </div>
 </div>
