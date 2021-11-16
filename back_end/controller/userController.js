@@ -112,7 +112,6 @@ const loggedIn = (req, res) => {
     body = JSON.parse(Object.keys(req.body)[0]);
     try {
         token = jwt.verify(body.jwt, key)
-        console.log(token)
         return res.send(true)
     } catch (err) {
         console.log('jwt error', err)
@@ -137,11 +136,36 @@ const delete_user = async (req, res) => {
     }
 }
 
+const get_all_users = async (req, res) => {
+    docs = await User.find()
+    users = []
+    for (doc of docs) {
+        if (!doc.statistics) {
+            continue
+        }
+        if (doc.identity) {
+            docName = doc.name
+        } else {
+            docName = 'Anonymous User'
+        }
+        let obj = {
+            name: docName,
+            choices: 0
+        }
+        users.push(obj)
+    }
+    res.send({
+        success: true,
+        users: users
+    })
+}
+
 module.exports = {
     login_post,
     register_post,
     update_user,
     get_user,
     loggedIn,
-    delete_user
+    delete_user,
+    get_all_users
 }

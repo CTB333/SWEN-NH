@@ -83,4 +83,9 @@ export class UsersService {
     let url = this.apiUrl + '/users/delete';
     return this.http.post<any>(url, { token }, httpOptions);
   }
+
+  getAllUsers(): Observable<any> {
+    let url = this.apiUrl + '/users/get-all';
+    return this.http.get<any[]>(url, httpOptions);
+  }
 }

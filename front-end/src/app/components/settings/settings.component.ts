@@ -89,7 +89,7 @@ export class SettingsComponent implements OnInit {
 
   donate() {
     let value = this.donationForm.value.donation;
-    this.errorMessage = true;
+    this.isError();
   }
 
   isError() {
@@ -114,7 +114,6 @@ export class SettingsComponent implements OnInit {
       (res) => {
         if (res.success) {
           this.isSuccess('Settings saved successfully');
-          this.usersService.logOut();
           return;
         }
         this.isError();
