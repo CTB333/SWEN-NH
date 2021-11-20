@@ -39,9 +39,12 @@ export class UsersService {
     return this.http.post<any>(url, json, httpOptions);
   }
 
-  loggedIn(): Promise<boolean> {
+  loggedIn(): Promise<boolean> | boolean {
     let url = this.apiUrl + '/users/loggedIn';
     let token = this.getToken();
+    if (token == null) {
+      return false;
+    }
     let data = {
       jwt: token,
     };

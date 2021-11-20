@@ -27,7 +27,6 @@ const login_post = async (req, res) => {
     password = body.password
     try {
         const user = await User.login(email.toLowerCase(), password.toLowerCase())
-        console.log(user)
         token = createToken(user._id)
         return res.json({success: true, token: token, type: 'login'})
     } catch (err) {
@@ -67,21 +66,26 @@ const update_user = async (req, res) => {
     try {
         token = jwt.verify(cookie, key)
         id = token.id
+        const filter = { _id: id }
+        const update = {
+            $set: {
+                statistics: stats,
+                identity: iden,
+                notifications: notif
+            }
+        }
+        user = await User.updateOne(filter, update)
+        return res.send({
+            success: true
+        })
     } catch (err) {
+        console.log('changing error')
+        console.log(err)
         return res.send({
             success: false,
             message: 'Token is invalid'
         })
     }
-    user = await User.findById(id)
-    console.log(user)
-    user.statistics = stats
-    user.identity = iden
-    user.notifications = notif
-    await user.save()
-    res.send({
-        success: true
-    })
 }
 
 const get_user = async (req, res) => {
@@ -169,3 +173,6 @@ module.exports = {
     delete_user,
     get_all_users
 }
+
+// 6193feef64def286cf34e426
+// 6193ff0d64def286cf34e42a

@@ -20,6 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { SuccessMessageComponent } from './components/success-message/success-message.component';
+import { GameComponent } from './components/game/game.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SuccessMessageComponent } from './components/success-message/success-me
     SettingsComponent,
     ErrorMessageComponent,
     SuccessMessageComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,
