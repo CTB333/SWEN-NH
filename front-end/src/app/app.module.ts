@@ -21,6 +21,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { SuccessMessageComponent } from './components/success-message/success-message.component';
 import { GameComponent } from './components/game/game.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { GameComponent } from './components/game/game.component';
     ErrorMessageComponent,
     SuccessMessageComponent,
     GameComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

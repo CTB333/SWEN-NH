@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ContactComponent } from './components/contact/contact.component';
 import { GameComponent } from './components/game/game.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -16,6 +17,10 @@ const appRoutes: Routes = [
   {
     path: 'game',
     component: GameComponent,
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
   },
   { path: '**', component: NotFoundComponent },
 ];

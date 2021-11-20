@@ -201,3 +201,22 @@ a {
     color: white;
     text-align: center;
 }
+
+.game-card {
+    padding: 15px;
+    background: var(--off-white);
+    border: 2px solid white;
+    border-radius: 7.5px;
+    color: var(--dark-gray);
+    transition: transform 0.3s ease-in-out;
+    cursor: cursor;
+}
+
+.game-card:hover {
+    transform: scale(1.15)
+}
+
+.link-text {
+    color: var(--light-blue);
+    text-decoration: underline;
+}

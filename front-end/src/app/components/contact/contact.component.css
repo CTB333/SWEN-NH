@@ -1,0 +1,9 @@
+.team-ul {
+    margin: 15px 0;
+    list-style-type: none;
+}
+
+.team-li {
+    margin: 10px 0;
+    width: 150px;
+}
