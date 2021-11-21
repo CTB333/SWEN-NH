@@ -10,9 +10,11 @@ const cors = require('cors');
 const mongo = require('mongoose')
 const app = express();
 
-const whitelist = ['http://localhost:4200'];
+const whitelist = ['http://localhost:4200', 'https://ctb333.github.io'];
 const corsOptions = {
     origin: (origin, callback) => {
+        console.log('This is the origin:')
+        console.log(origin)
         if(whitelist.includes(origin))
             return callback(null, true)
         callback(new Error('Not allowed by CORS'));
