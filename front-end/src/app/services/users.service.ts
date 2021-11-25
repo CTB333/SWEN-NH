@@ -18,7 +18,8 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class UsersService {
-  private apiUrl: string = 'http://localhost:3000';
+  private apiUrl: string =
+    'https://5f36-2603-7080-1f02-275a-c063-4deb-34d0-14d1.ngrok.io';
 
   constructor(private http: HttpClient, private router: Router) {}
 
