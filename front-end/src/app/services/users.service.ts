@@ -26,6 +26,7 @@ export class UsersService {
   login(form: FormGroup): Observable<any> {
     let url = this.apiUrl + '/users/login';
     let json = JSON.stringify(form);
+    console.log('Request to:', url);
     return this.http.post<any>(url, json, httpOptions);
   }
 
