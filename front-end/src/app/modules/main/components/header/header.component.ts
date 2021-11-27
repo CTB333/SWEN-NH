@@ -20,6 +20,5 @@ export class HeaderComponent implements OnInit {
 
   async ngOnInit() {
     this.isLoggedIn = await this.usersService.loggedIn();
-    console.log('Header:', this.isLoggedIn);
   }
 }
